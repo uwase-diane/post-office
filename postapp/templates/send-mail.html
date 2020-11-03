@@ -1,21 +1,21 @@
-{% extends 'sidebar.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
 Send a mail
 {% endblock %}
 
-{% block styles %}
-
-
-{% endblock %}
 
 {% block center_content %}
 
-<div class="col-content">
-    <div class="custom-card">
-        <div class="col-content">
-            <h3>Send a mail</h3>
-            <br>
+<div class="col-content pt-5">
+    <div class="card">
+        <div class="card-body">
+          <h4 class="text-uppercase text-center">send mail</h4>
+        </div>
+      </div>
+    <div class="custom-card card">
+        <div class="col-content card-body">
+            
             <form method="post" action="/add-mail" enctype="multipart/form-data">
                 {% csrf_token %}
 

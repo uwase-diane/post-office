@@ -1,47 +1,93 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
 
-{% block title %}
-Login to continue
-{% endblock %}
-
-{% block styles %}
+{% load static %}
 
 
-{% endblock %}
+<html lang="en">
 
-{% block content %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
+    <!-- Twitter -->
+    <meta name="twitter:site" content="@themepixels">
+    <meta name="twitter:creator" content="@themepixels">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bracket Plus">
+    <meta name="twitter:description" content="Premium Quality and Responsive UI for Dashboard.">
+    <meta name="twitter:image" content="http://themepixels.me/bracketplus/img/bracketplus-social.png">
+
+    <!-- Facebook -->
+    <meta property="og:url" content="http://themepixels.me/bracketplus">
+    <meta property="og:title" content="Bracket Plus">
+    <meta property="og:description" content="Premium Quality and Responsive UI for Dashboard.">
+
+    <meta property="og:image" content="http://themepixels.me/bracketplus/img/bracketplus-social.png">
+    <meta property="og:image:secure_url" content="http://themepixels.me/bracketplus/img/bracketplus-social.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="600">
+
+    <!-- Meta -->
+    <meta name="description" content="Premium Quality and Responsive UI for Dashboard.">
+    <meta name="author" content="ThemePixels">
+
+    <title>Post-Office</title>
+
+    <!-- vendor css -->
+    <link href="{% static 'lib/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet' %}">
+    <link href="{% static 'lib/ionicons/css/ionicons.min.css" rel="stylesheet' %}">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="{% static 'css/bracket.css' %}">
+
+</head>
+
+<body class="bg-info">
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
                 <br><br><br><br>
-            <div class="custom-card">
-                <div class="col-content">
-                    <h4 align="center">Login</h4>
-                <form method="post" action="/sign-in">
-                    {% csrf_token %}
-              <div class="form-group">
-                <label for="exampleInputEmail1">Phone number</label>
-                <input type="tel" name="username" placeholder="+25078xxxxxxxx" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" name="password" placeholder="*********" class="form-control" id="exampleInputPassword1" required>
-              </div>
+                <div class="custom-card">
+                    <div class="col-content">
 
-              <button type="submit" class="btn btn-primary col-12">Login</button>
-                    <br>
-                    <br>
-                    <a href="/register">Register your account now</a>
-            </form>
+                        <div class="signin-logo tx-center tx-28 tx-bold  tx-inverse text-light"><span class="tx-normal ">[</span>
+                            Post-Office<span class="tx-info"> Login</span> <span class="tx-normal">]</span></div>
+                        <div class="card">
+                            <div class="card-body">
+                                <form method="post" action="/sign-in">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Phone number</label>
+                                        <input type="tel" name="username" placeholder="+25078xxxxxxxx"
+                                            class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                            required>
+                                        <small id="emailHelp" class="form-text text-muted">We'll never share your phone Number
+                                            with anyone else.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Password</label>
+                                        <input type="password" name="password" placeholder="*********"
+                                            class="form-control" id="exampleInputPassword1" required>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary col-12">Login</button>
+                                    <br>
+                                    <br>
+                                    <a href="/register">Register your account now</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
+            <div class="col-md-4"></div>
         </div>
-        <div class="col-md-4"></div>
     </div>
-</div>
 
-
-{% endblock %}
+</body>
