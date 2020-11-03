@@ -1,0 +1,110 @@
+{% extends 'sidebar.html' %}
+
+{% block title %}
+Tracking
+{% endblock %}
+
+{% block styles %}
+
+
+{% endblock %}
+
+{% block center_content %}
+
+<div class="col-content">
+    <br><br><br>
+    <h3>Tacking</h3>
+
+    <ul class="list-group">
+        {% for pa in parcels %}
+        <li class="list-group-item">
+            <div class="alert alert-secondary" role="alert">
+                <h5><b>{{pa.tracking_number}}</b> | {{pa.delivery_option}}</h5>
+                <p class="danger">
+                    {% if user == pa.sender %}
+                    <b>Outgoing to:</b>
+                    <br>
+                    {{pa.receiver.get_full_name}}
+                    <br>
+                    {{pa.receiver.email}}
+                    <br>
+                    {{pa.receiver.username}}
+                    <br>
+                    <br>
+                    <b>Address: {% if pa.receiver_address %}{{pa.receiver_address.name}}{% endif %}</b>
+                    <br>
+                    {% if pa.receiver_address %}
+                    {{pa.receiver_address.country}} | {{pa.receiver_address.province}} |
+                    {{pa.receiver_address.district}} | {{pa.receiver_address.street}} |
+                    {{pa.receiver_address.house_number}}
+                    {% else %}
+                    Pickup from the post office
+                    {% endif %}
+                    {% else %}
+                    <b>Incoming from:</b>
+                    <br>
+                    {{pa.sender.get_full_name}}
+                    <br>
+                    {{pa.sender.email}}
+                    <br>
+                    {{pa.sender.username}}
+                    <br>
+                    <br>
+                    <b>Address: {% if pa.receiver_address %}{{pa.receiver_address.name}}{% endif %}</b>
+                    <br>
+                    {% if pa.receiver_address %}
+                    {{pa.receiver_address.country}} | {{pa.receiver_address.province}} |
+                    {{pa.receiver_address.district}} | {{pa.receiver_address.street}} |
+                    {{pa.receiver_address.house_number}}
+                    {% else %}
+                    Pickup from the post office
+                    {% endif %}
+                    {% endif %}</p>
+
+            </div>
+
+            {% if pa.status == "Waiting pickup" %}
+            <div class="alert alert-primary col-3" role="alert">
+                {{pa.status}}
+            </div>
+
+            {% elif pa.status == "Checking" %}
+
+            <div class="alert alert-info col-3" role="alert">
+                {{pa.status}}
+            </div>
+
+            {% elif pa.status == "On way" %}
+
+            <div class="alert alert-warning col-3" role="alert">
+                {{pa.status}}
+            </div>
+
+            {% elif pa.status == "Delivered" %}
+
+            <div class="alert alert-success col-4" role="alert">
+                {{pa.status}} at
+                <br>
+                <b>{{pa.delivered_at}}</b>
+            </div>
+            {% endif %}
+
+            {% if pa.is_paid == False %}
+            <a href="/parcels/{{pa.tracking_number}}">
+                <button class="btn btn-primary">Pay now</button>
+            </a>
+            {% else %}
+            <a href="/parcels/{{pa.tracking_number}}">
+                <button class="btn btn-primary">View detail</button>
+            </a>
+            {% endif %}
+        </li>
+        {% empty %}
+        <li class="list-group-item">
+            <p>No mails yet!</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

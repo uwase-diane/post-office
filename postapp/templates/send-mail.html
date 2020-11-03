@@ -1,0 +1,91 @@
+{% extends 'sidebar.html' %}
+
+{% block title %}
+Send a mail
+{% endblock %}
+
+{% block styles %}
+
+
+{% endblock %}
+
+{% block center_content %}
+
+<div class="col-content">
+    <div class="custom-card">
+        <div class="col-content">
+            <h3>Send a mail</h3>
+            <br>
+            <form method="post" action="/add-mail" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Mail image</label>
+                    <input type="file" name="image" placeholder="Parcel image" class="form-control"
+                           id="exampleInputText" aria-describedby="emailHelp" accept="image/*" required
+                           readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Tracking number</label>
+                    <input type="text" name="tracking_number" placeholder="Tracking number" class="form-control"
+                           id="exampleInputText" aria-describedby="emailHelp" value="{{tracking_number}}" required
+                           readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputText">Description</label>
+                    <textarea placeholder="Description" class="form-control" name="description" id="description"
+                              cols="10" rows="5" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Quantity in KG</label>
+                    <input type="number" name="quantity" placeholder="Quantity" class="form-control"
+                           id="exampleInputText" aria-describedby="emailHelp" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Status</label>
+                    <select class="form-control" id="exampleFormControlSelect1" name="status">
+                        <option value="Waiting pickup" selected>Waiting pickup</option>
+                        <!--                  <option value="Checking">Checking</option>-->
+                        <!--                  <option value="On way">On way</option>-->
+                        <!--                  <option value="Delivered">Delivered</option>-->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Delivery option</label>
+                    <select class="form-control" id="exampleFormControlSelect1" name="delivery_option">
+                        <option value="Regular" selected>Regular</option>
+                        <option value="Express">Express</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Pickup address</label>
+                    <select class="form-control" id="exampleFormControlSelect1" name="sender_address">
+                        {% for ad in addresses %}
+                        <option value="{{ad.id}}" {% if ad.is_default %}selected{% endif %}>
+                            {{ad.name}}
+                            {% if ad.is_default %}(Default){% endif %}
+                        </option>
+                        {% empty %}
+                        <option selected>Please add addresses first</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Receiver phone number</label>
+                    <input type="tel" name="receiver" maxlength="15" minlength="13" placeholder="+25078xxxxxxxx"
+                           class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary col-12">Send now</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

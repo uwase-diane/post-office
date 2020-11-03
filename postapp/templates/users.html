@@ -1,0 +1,32 @@
+{% extends 'users-sidebar.html' %}
+
+{% block title %}
+{{group.name}}
+{% endblock %}
+
+{% block styles %}
+
+
+{% endblock %}
+
+{% block center_content %}
+
+
+<div class="custom-ca">
+    <br><br><br>
+    <ul class="list-group">
+        {% for user in users %}
+        <li class="list-group-item">
+            <a href="/admin/auth/user/{{user.id}}/change">{{user.first_name}} {{user.last_name}}</a>
+            <br>
+            {{user.username}} | {{user.email}}
+        </li>
+        {% empty %}
+        <li class="list-group-item">
+            No {{group.name}}s available in the system.
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
