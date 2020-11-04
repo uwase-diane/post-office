@@ -1,0 +1,190 @@
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.team_view.surface:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border: 0;
+}
+
+.team_view .surface {
+    float: left;
+    background: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    border: 2px solid #d5d5d5;
+    margin: 0 0 8px;
+}
+
+.team_view .surface figure {
+    width: 140px;
+    /*height: 190px;*/
+    border-radius: 100%;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.team_view .surface img {
+    
+    height: 148px;
+    border-radius: 100%;
+}
+
+.oteam_view .surface h3 {
+    color: #2a2a2a;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 6px 0;
+    text-transform: uppercase;
+}
+
+.team_view .surface h3 a {
+    text-decoration: none;
+    color: #2a2a2a;
+}
+
+.team_view .surface h3 a:hover {
+    color: #337ab7;
+}
+
+.team_view .surface p {
+    color: #2a2a2a;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+#id_total_cost_0{
+    height: 42px;
+}
+#id_total_cost_1{
+    height: 42px;
+    margin-left: 18px;
+
+}
+#id_cost_counter_part_0{
+    height: 42px; 
+}
+#id_cost_counter_part_1{
+    height: 42px;
+    margin-left: 18px;
+}
+#id_project{
+    height: 37px;
+    width: 250px;;
+}
+.filter-btn{
+    height: 42px;
+    font-size: 18px;
+
+}
+.mtef-search{
+    font-size: 23px;
+
+}
+
+.urbg{
+    color: #006991;
+}
+.urback{
+    background-color: #006991 !important;
+}
+
+.documents #id_project{
+    width: 250px;
+    padding: 11px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.documents .btn{
+    width: 100px;
+    max-height: 40px;
+}
+
+.sw-list #id_project_name{
+    width: 250px;
+    padding: 11px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.sw-list .btn{
+    width: 100px;
+    max-height: 40px;
+}
+
+.reporting #id_project_name{
+    width: 250px;
+    padding: 11px;
+    margin-right: 15px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+.reporting #id_year{
+    width: 200px;
+    padding: 11px;
+    background-color: #fff;
+    border-radius: 4px;
+    margin-right: 15px;
+
+}
+.reporting #id_quarter{
+    width: 100px;
+    padding: 11px;
+    background-color: #fff;
+    border-radius: 4px;
+
+}
+.reporting .btn{
+    width: 100px;
+    max-height: 40px;
+}
+
+.awardee-card{
+    background: #00628b !important;
+    padding: 0.70rem !important;
+}
+
+.awardee-card .card-title, .awardee-card .card-link{
+    color: #fff !important;
+}
+.awardee-card .card-link:hover{
+    text-decoration: underline;
+}
+
+.form-layout .award-btn{
+    padding: 0.3rem 0.71rem !important;
+    font-size: 1.02375rem !important;
+
+}
+
+.card-body .add-awrdee-btn{
+    padding: 0.3rem 0.71rem !important;
+    font-size: 1.02375rem !important;
+
+}
+
+.search_button{
+          margin-top: 30px!important;
+          height: 40px;
+      }
+
+.logo-landingpage{
+    background: white;
+    border-radius: 196px;
+    width: 170px;
+}
+
+.copyright{
+    text-align: center;
+    color: #fff;
+}
+
+.home-button
+{
+    color:#006991;
+    background-color:#ffffff;
+}
