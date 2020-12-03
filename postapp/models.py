@@ -29,10 +29,13 @@ class Address(models.Model):
 class Parcel(models.Model):
     tracking_number = models.CharField(max_length=10)
     image = models.ImageField(upload_to="item_images", null=True)
-    quantity = models.DecimalField(default=0, decimal_places=1, max_digits=2)
+    quantity = models.DecimalField(default=0, decimal_places=1, max_digits=10)
     total_price = models.IntegerField(default=0)
     description = models.TextField()
     statuses = {
+        ("Waiting", "Waiting"),
+        ("Accepted", "Accepted"),
+        ("Rejected", "Rejected"),
         ("Waiting pickup", "Waiting pickup"),
         ("Checking", "Checking"),
         ("On way", "On way"),

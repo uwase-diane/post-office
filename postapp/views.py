@@ -200,11 +200,13 @@ def add_parcel(request):
     data["receiver"] = receiver
     rad = Address.objects.filter(user=receiver, is_default=True).first()
     data["receiver_address"] = rad
+    data["quantity"] = float(data["quantity"])
 
     parc = Parcel(**data)
     parc.sender = request.user
     parc.image = img
     parc.total_price = int(total)
+    print(data)
     parc.save()
     return redirect("/tracking")
 
@@ -228,5 +230,6 @@ def parcel_payment(request, parcel_id):
     if not parcel:
         return redirect("tracking")
     parcel.is_paid = True
+    parcel.status = "Waiting pickup"
     parcel.save()
     return redirect("/parcels/{}".format(parcel_id))

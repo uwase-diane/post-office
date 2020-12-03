@@ -1,14 +1,9 @@
-{% extends 'base.html' %}
-
-
-{% block styles %}
+<style>
 
 .logout-link {
     color: white !important;
 }
-
-
-{% endblock %}
+</style>
 
 
 
@@ -32,6 +27,8 @@
         </div>
 
         <div class="col-md-9">
+            {% block center_content %}
+            {% endblock %}
             
         </div>
     </div>

@@ -89,7 +89,7 @@ Tracking
             </div>
             {% endif %}
 
-            {% if pa.is_paid == False %}
+            {% if pa.is_paid == False and pa.status == 'Accepted' %}
             <a href="/parcels/{{pa.tracking_number}}">
                 <button class="btn btn-primary">Pay now</button>
             </a>
