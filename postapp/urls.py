@@ -20,4 +20,6 @@ urlpatterns = [
     path('delete-address/<slug:address_id>', views.address_delete),
     path('parcels/<slug:parcel_id>', views.parcel_detail),
     path('parcel-payment/<slug:parcel_id>', views.parcel_payment),
+    path('add-user', views.add_user),
+    path('reports', views.get_reports),
 ]

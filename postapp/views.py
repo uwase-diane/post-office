@@ -26,7 +26,31 @@ def sign_in(request):
     if not user:
         return redirect("/login")
     login(request, user)
-    return redirect("/profile")
+
+    if user.is_staff:
+        return redirect("/users")
+
+    group = user.groups.first()
+
+    customer = Group.objects.filter(name="Customer").first()
+    worker = Group.objects.filter(name="Worker").first()
+
+    if not customer:
+        customer = Group(name="Customer")
+        customer.save()
+
+    if not worker:
+        worker = Group(name="Worker")
+        worker.save()
+
+    if group == customer:
+        return redirect("/profile")
+
+    if group == worker:
+        return redirect("/parcels")
+
+    logout(request)
+    return redirect("/login")
 
 
 def register_view(request):
@@ -64,6 +88,45 @@ def sign_up(request):
 
 
 @login_required(login_url='/login')
+def add_user(request):
+    dt = request.POST
+    data = dt.dict()
+    data.pop("csrfmiddlewaretoken")
+    print(data)
+    gr = data.pop("group")
+    group = Group.objects.filter(name=gr).first()
+
+    if not group:
+        group = Group(name=gr)
+        group.save()
+
+    password = data.pop("password")
+
+    user = User(**data)
+    user.set_password(password)
+    user.save()
+    user.groups.add(group)
+    return redirect("/users?group=Worker")
+
+
+@login_required(login_url='/login')
+def get_reports(request):
+    if not request.user.is_staff:
+        logout(request)
+        return redirect("/login")
+    data = {
+        "waiting": Parcel.objects.filter(status="Waiting"),
+        "accepted": Parcel.objects.filter(status="Accepted"),
+        "rejected": Parcel.objects.filter(status="Rejected"),
+        "waiting_pickup": Parcel.objects.filter(status="Waiting pickup"),
+        "checking": Parcel.objects.filter(status="Checking"),
+        "on_way": Parcel.objects.filter(status="On way"),
+        "delivered": Parcel.objects.filter(status="Delivered"),
+    }
+    return render(request, "reports.html", data)
+
+
+@login_required(login_url='/login')
 def get_users(request):
     data = {}
     group_name = request.GET.get('group')
@@ -74,6 +137,7 @@ def get_users(request):
     data["users"] = users
     data["group"] = group
     data["user"] = request.user
+    data["groups"] = Group.objects.all()
     return render(request, "users.html", data)
 
 

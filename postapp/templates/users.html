@@ -1,10 +1,21 @@
-{% extends 'users-sidebar.html' %}
+{% extends 'base-admin.html' %}
 
 {% block title %}
 {{group.name}}
 {% endblock %}
 
 {% block styles %}
+
+<style>
+    .add-user-btn {
+        border-radius: 20px !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        margin: 32px;
+        box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    }
+</style>
 
 
 {% endblock %}
@@ -20,6 +31,12 @@
             <a href="/admin/auth/user/{{user.id}}/change">{{user.first_name}} {{user.last_name}}</a>
             <br>
             {{user.username}} | {{user.email}}
+            <br>
+            <b>{{group.name}} ID: </b>{{user.id}}
+            <br>
+            <button type="button" class="btn btn-primary add-user-btn">
+                {% if user.is_active == True %}Disable{% else %}Enable{% endif %}
+            </button>
         </li>
         {% empty %}
         <li class="list-group-item">
@@ -27,6 +44,76 @@
         </li>
         {% endfor %}
     </ul>
+</div>
+
+
+
+<!-- ADD WORKER MODAL -->
+
+<!-- Button trigger modal -->
+
+{% if group.name == 'Worker' %}
+<button type="button" class="btn btn-primary add-user-btn" data-toggle="modal" data-target="#exampleModal">
+  Add {{group.name}}
+</button>
+{% endif %}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add {{group.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="/add-user">
+            {% csrf_token %}
+
+            <div class="form-group">
+            <label for="fname">First name</label>
+            <input type="text" name="first_name" placeholder="John" class="form-control" id="fname" required>
+          </div>
+
+            <div class="form-group">
+            <label for="lname">Last name</label>
+            <input type="text" name="last_name" placeholder="Doe" class="form-control" id="lname" required>
+          </div>
+
+            <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" name="email" placeholder="john.doe@gmail.com" class="form-control" id="email" required>
+            <small id="emailHelp" class="form-text text-muted">Worker email address. Should be unique</small>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone number</label>
+            <input type="tel" name="username" placeholder="+2507XXXXXXXX" class="form-control" id="phone" required>
+            <small id="emailHelp" class="form-text text-muted">Phone numbers must be unique</small>
+          </div>
+
+            <div class="form-group">
+            <label for="group">Account type</label>
+            <select name="group" class="form-control" id="group" required>
+                <option value="{{group.name}}" selected>{{group.name}}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="******" id="password" required>
+              <small id="emailHelp" class="form-text text-muted">Default password. This can be changed later.</small>
+          </div>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
