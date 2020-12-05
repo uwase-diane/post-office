@@ -79,7 +79,7 @@
 </div>
 {% endif %}
 
-{% if parcel.is_paid == False %}
+{% if parcel.is_paid == False and parcel.status == 'Accepted' %}
 <form>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
     <button type="button" onClick="makePayment()" class="btn btn-success">Pay Now</button>
@@ -98,8 +98,7 @@
       currency: "RWF",
       country: "RW",
       payment_options: "card, mobilemoneyrwanda",
-      redirect_url: // specified redirect URL
-        "http://localhost:8000/parcel-payment/{{parcel.tracking_number}}",
+      redirect_url: "http://localhost:8000/parcel-payment/{{parcel.tracking_number}}",
       meta: {
         consumer_id: 23,
         consumer_mac: "92a3-912ba-1192a",
