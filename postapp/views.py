@@ -206,7 +206,7 @@ def set_parcel_status(request, parcel_id):
 
     if status in statuses and parcel:
         if status == "approve":
-            parcel.status = "Waiting pickup"
+            parcel.status = "Accepted"
         elif status == "reject":
             parcel.status = "Rejected"
         elif status == "checking":

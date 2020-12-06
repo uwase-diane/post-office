@@ -30,9 +30,9 @@ class Parcel(models.Model):
     tracking_number = models.CharField(max_length=10)
     image = models.ImageField(upload_to="item_images", null=True)
     quantity = models.DecimalField(default=0, decimal_places=1, max_digits=10)
-    dimension_height = models.DecimalField(max_digits=2, decimal_places=2, default=0, help_text="in mm")
-    dimension_width = models.DecimalField(max_digits=2, decimal_places=2, default=0, help_text="in mm")
-    dimension_length = models.DecimalField(max_digits=2, decimal_places=2, default=0, help_text="in mm")
+    dimension_height = models.DecimalField(max_digits=10, decimal_places=2, default=0, help_text="in mm")
+    dimension_width = models.DecimalField(max_digits=10, decimal_places=2, default=0, help_text="in mm")
+    dimension_length = models.DecimalField(max_digits=10, decimal_places=2, default=0, help_text="in mm")
     total_price = models.IntegerField(default=0)
     description = models.TextField()
     statuses = {
