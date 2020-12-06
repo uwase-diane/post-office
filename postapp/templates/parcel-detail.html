@@ -9,47 +9,85 @@
 <br><br><br>
 
 <div class="alert alert-secondary" role="alert">
-    <h5><b>{{parcel.tracking_number}}</b> | {{parcel.delivery_option}}</h5>
-    <p class="danger">
-        {% if user == parcel.sender %}
-        <b>Outgoing to:</b>
-        <br>
-        {{parcel.receiver.get_full_name}}
-        <br>
-        {{parcel.receiver.email}}
-        <br>
-        {{parcel.receiver.username}}
-        <br>
-        <br>
-        <b>Address: {% if parcel.receiver_address %}{{parcel.receiver_address.name}}{% endif %}</b>
-        <br>
-        {% if parcel.receiver_address %}
-        {{parcel.receiver_address.country}} | {{parcel.receiver_address.province}} |
-        {{parcel.receiver_address.district}} | {{parcel.receiver_address.street}} |
-        {{parcel.receiver_address.house_number}}
-        {% else %}
-        Pickup from the post office
-        {% endif %}
-        {% else %}
-        <b>Incoming from:</b>
-        <br>
-        {{parcel.sender.get_full_name}}
-        <br>
-        {{parcel.sender.email}}
-        <br>
-        {{parcel.sender.username}}
-        <br>
-        <br>
-        <b>Address: {% if parcel.receiver_address %}{{parcel.receiver_address.name}}{% endif %}</b>
-        <br>
-        {% if parcel.receiver_address %}
-        {{parcel.receiver_address.country}} | {{parcel.receiver_address.province}} |
-        {{parcel.receiver_address.district}} | {{parcel.receiver_address.street}} |
-        {{parcel.receiver_address.house_number}}
-        {% else %}
-        Pickup from the post office
-        {% endif %}
-        {% endif %}</p>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="col-content">
+                <img src="{{parcel.image.url}}" alt="{{parcel.tracking_number}}" class="img-fluid" height="100">
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="col-content">
+                <h5><b>{{parcel.tracking_number}}</b> | {{parcel.delivery_option}}</h5>
+
+                <p>
+                    <b>Dimensions</b>
+                    <br>
+                    Weight: {{parcel.quantity}}KG
+                    <br>
+                    Height: {{parcel.dimension_height}}mm
+                    <br>
+                    Width: {{parcel.dimension_width}}mm
+                    <br>
+                    Length: {{parcel.dimension_length}}mm
+                </p>
+
+                <p class="danger">
+                {% if user == parcel.sender %}
+                <b>Outgoing to:</b>
+                <br>
+                {{parcel.receiver.get_full_name}}
+                <br>
+                {{parcel.receiver.email}}
+                <br>
+                {{parcel.receiver.username}}
+                <br>
+                <br>
+                <b>Address: {% if parcel.receiver_address %}{{parcel.receiver_address.name}}{% endif %}</b>
+                <br>
+                {% if parcel.receiver_address %}
+                {{parcel.receiver_address.country}} | {{parcel.receiver_address.province}} |
+                {{parcel.receiver_address.district}} | {{parcel.receiver_address.street}} |
+                {{parcel.receiver_address.house_number}}
+                {% else %}
+                Pickup from the post office
+                {% endif %}
+                {% else %}
+                <b>Incoming from:</b>
+                <br>
+                {{parcel.sender.get_full_name}}
+                <br>
+                {{parcel.sender.email}}
+                <br>
+                {{parcel.sender.username}}
+                <br>
+                <br>
+                <b>Address: {% if parcel.receiver_address %}{{parcel.receiver_address.name}}{% endif %}</b>
+                <br>
+                {% if parcel.receiver_address %}
+                {{parcel.receiver_address.country}} | {{parcel.receiver_address.province}} |
+                {{parcel.receiver_address.district}} | {{parcel.receiver_address.street}} |
+                {{parcel.receiver_address.house_number}}
+                {% else %}
+                Pickup from the post office
+                {% endif %}
+                {% endif %}</p>
+
+                <p>
+                    <b>Status</b>
+                    <br>
+                    {{parcel.status}}
+                    <br>
+                    <br>
+                    <b>Total amount {% if parcel.is_paid %}paid{% else %}to be paid{% endif %}</b>
+                    <br>
+                    {{parcel.total_price}}Rwf
+                </p>
+            </div>
+        </div>
+    </div>
+
+
 
 </div>
 

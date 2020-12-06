@@ -1,0 +1,65 @@
+{% extends 'base-admin.html' %}
+
+{% block title %}
+New mails
+{% endblock %}
+
+
+{% block center_content %}
+
+
+<div class="custom-ca">
+    <br>
+
+    <ul class="list-group">
+    {% for p in parcels %}
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-md-4">
+            <div class="col-content">
+                <img class="img-fluid" src="{{p.image.url}}" alt="{{p.tracking_number}}">
+            </div>
+        </div>
+            <div class="col-md-8">
+            <div class="col-content">
+                <b>Tracking number: </b>{{p.tracking_number}}
+                <br>
+                <b>Quantity: </b>{{p.quantity}}Kg
+                <br>
+                <b>Dimensions: </b>{{p.dimension_height}}mm x {{p.dimension_width}}mm x {{p.dimension_length}}mm
+                <br>
+                <b>Sender: </b>{{p.sender.first_name}} {{p.sender.last_name}}
+                <br>
+                <b>Address: </b>{{p.sender_address.name}}
+                <br>
+                <b>Receiver: </b>{{p.receiver.first_name}} {{p.receiver.last_name}}
+                <br>
+                <b>Address: </b>{{p.receiver_address.name}}
+                <br>
+                <b>Delivery option: </b>{{p.delivery_option}}
+                <br>
+                <b>Price: </b>{{p.total_price}} Rwf
+                <br>
+                <b>Is paid: </b>{% if p.is_paid %}Yes{% else %}No{% endif %}
+                <br>
+                <b>Description: </b>{{p.description}}
+                <br>
+                <br>
+                <a href="/parcel-status/{{p.id}}?status=approve">
+                    <button class="btn btn-primary">Approve for payment</button>
+                </a>
+                <a href="/parcel-status/{{p.id}}?status=reject">
+                    <button class="btn btn-danger">Reject</button>
+                </a>
+            </div>
+        </div>
+        </div>
+    </li>
+    {% empty %}
+    <li class="list-group-item">No mails</li>
+    {% endfor %}
+</ul>
+
+</div>
+
+{% endblock %}

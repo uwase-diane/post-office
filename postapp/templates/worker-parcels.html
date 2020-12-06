@@ -1,7 +1,7 @@
-{% extends 'base-admin.html' %}
+{% extends 'base-worker.html' %}
 
 {% block title %}
-Reports
+Mails Management
 {% endblock %}
 
 
@@ -13,13 +13,7 @@ Reports
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" id="new-tab" data-toggle="tab" href="#new" role="tab" aria-controls="home" aria-selected="true">New</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="accepted-tab" data-toggle="tab" href="#accepted" role="tab" aria-controls="profile" aria-selected="false">Accepted</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="waiting-tab" data-toggle="tab" href="#waiting" role="tab" aria-controls="contact" aria-selected="false">Waiting pickup</a>
+        <a class="nav-link active" id="waiting-tab" data-toggle="tab" href="#waiting" role="tab" aria-controls="contact" aria-selected="false">Waiting pickup</a>
       </li>
 
         <li class="nav-item">
@@ -33,103 +27,9 @@ Reports
         <li class="nav-item">
         <a class="nav-link" id="delivered-tab" data-toggle="tab" href="#delivered" role="tab" aria-controls="contact" aria-selected="false">Delivered</a>
       </li>
-
-        <li class="nav-item">
-        <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="contact" aria-selected="false">Rejected</a>
-      </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
-            <br>
-            <ul class="list-group">
-                {% for p in waiting %}
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-md-4">
-                        <div class="col-content">
-                            <img class="img-fluid" src="{{p.image.url}}" alt="{{p.tracking_number}}">
-                        </div>
-                    </div>
-                        <div class="col-md-8">
-                        <div class="col-content">
-                            <b>Tracking number: </b>{{p.tracking_number}}
-                            <br>
-                            <b>Quantity: </b>{{p.quantity}}Kg
-                            <br>
-                            <b>Dimensions: </b>{{p.dimension_height}}mm x {{p.dimension_width}}mm x {{p.dimension_length}}mm
-                            <br>
-                            <b>Sender: </b>{{p.sender.first_name}} {{p.sender.last_name}}
-                            <br>
-                            <b>Address: </b>{{p.sender_address.name}}
-                            <br>
-                            <b>Receiver: </b>{{p.receiver.first_name}} {{p.receiver.last_name}}
-                            <br>
-                            <b>Address: </b>{{p.receiver_address.name}}
-                            <br>
-                            <b>Delivery option: </b>{{p.delivery_option}}
-                            <br>
-                            <b>Price: </b>{{p.total_price}} Rwf
-                            <br>
-                            <b>Is paid: </b>{% if p.is_paid %}Yes{% else %}No{% endif %}
-                            <br>
-                            <b>Description: </b>{{p.description}}
-                            <br>
-                        </div>
-                    </div>
-                    </div>
-                </li>
-                {% empty %}
-                <li class="list-group-item">No mails</li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <div class="tab-pane fade" id="accepted" role="tabpanel" aria-labelledby="accepted-tab">
-            <br>
-            <ul class="list-group">
-                {% for p in accepted %}
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-md-4">
-                        <div class="col-content">
-                            <img class="img-fluid" src="{{p.image.url}}" alt="{{p.tracking_number}}">
-                        </div>
-                    </div>
-                        <div class="col-md-8">
-                        <div class="col-content">
-                            <b>Tracking number: </b>{{p.tracking_number}}
-                            <br>
-                            <b>Quantity: </b>{{p.quantity}}Kg
-                            <br>
-                            <b>Dimensions: </b>{{p.dimension_height}}mm x {{p.dimension_width}}mm x {{p.dimension_length}}mm
-                            <br>
-                            <b>Sender: </b>{{p.sender.first_name}} {{p.sender.last_name}}
-                            <br>
-                            <b>Address: </b>{{p.sender_address.name}}
-                            <br>
-                            <b>Receiver: </b>{{p.receiver.first_name}} {{p.receiver.last_name}}
-                            <br>
-                            <b>Address: </b>{{p.receiver_address.name}}
-                            <br>
-                            <b>Delivery option: </b>{{p.delivery_option}}
-                            <br>
-                            <b>Price: </b>{{p.total_price}} Rwf
-                            <br>
-                            <b>Is paid: </b>{% if p.is_paid %}Yes{% else %}No{% endif %}
-                            <br>
-                            <b>Description: </b>{{p.description}}
-                            <br>
-                        </div>
-                    </div>
-                    </div>
-                </li>
-                {% empty %}
-                <li class="list-group-item">No mails</li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <div class="tab-pane fade" id="waiting" role="tabpanel" aria-labelledby="waiting-tab">
+        <div class="tab-pane fade show active" id="waiting" role="tabpanel" aria-labelledby="waiting-tab">
             <br>
             <ul class="list-group">
                 {% for p in waiting_pickup %}
@@ -164,6 +64,12 @@ Reports
                             <br>
                             <b>Description: </b>{{p.description}}
                             <br>
+                            <br>
+                            {% if p.is_paid %}
+                            <a href="/parcel-status/{{p.id}}?status=checking">
+                                <button class="btn btn-primary">Mark as picked up</button>
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
                     </div>
@@ -210,6 +116,10 @@ Reports
                             <b>Description: </b>{{p.description}}
                             <br>
                             <b>Picked up by: </b>{{p.picked_up_by.get_full_name}}
+                            <br><br>
+                            <a href="/parcel-status/{{p.id}}?status=on_way">
+                                <button class="btn btn-primary">Dispatch</button>
+                            </a>
                         </div>
                     </div>
                     </div>
@@ -256,6 +166,10 @@ Reports
                             <b>Description: </b>{{p.description}}
                             <br>
                             <b>Picked up by: </b>{{p.picked_up_by.get_full_name}}
+                            <br><br>
+                            <a href="/parcel-status/{{p.id}}?status=delivered">
+                                <button class="btn btn-primary">Deliver</button>
+                            </a>
                         </div>
                     </div>
                     </div>
@@ -312,51 +226,6 @@ Reports
             </ul>
         </div>
 
-        <div class="tab-pane fade" id="rejected" role="tabpanel" aria-labelledby="rejected-tab">
-            <br>
-            <ul class="list-group">
-                {% for p in rejected %}
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-md-4">
-                        <div class="col-content">
-                            <img class="img-fluid" src="{{p.image.url}}" alt="{{p.tracking_number}}">
-                        </div>
-                    </div>
-                        <div class="col-md-8">
-                        <div class="col-content">
-                            <b>Tracking number: </b>{{p.tracking_number}}
-                            <br>
-                            <b>Quantity: </b>{{p.quantity}}Kg
-                            <br>
-                            <b>Dimensions: </b>{{p.dimension_height}}mm x {{p.dimension_width}}mm x {{p.dimension_length}}mm
-                            <br>
-                            <b>Sender: </b>{{p.sender.first_name}} {{p.sender.last_name}}
-                            <br>
-                            <b>Address: </b>{{p.sender_address.name}}
-                            <br>
-                            <b>Receiver: </b>{{p.receiver.first_name}} {{p.receiver.last_name}}
-                            <br>
-                            <b>Address: </b>{{p.receiver_address.name}}
-                            <br>
-                            <b>Delivery option: </b>{{p.delivery_option}}
-                            <br>
-                            <b>Price: </b>{{p.total_price}} Rwf
-                            <br>
-                            <b>Is paid: </b>{% if p.is_paid %}Yes{% else %}No{% endif %}
-                            <br>
-                            <b>Description: </b>{{p.description}}
-                            <br>
-                            <b>Picked up by: </b>{{p.picked_up_by.get_full_name}}
-                        </div>
-                    </div>
-                    </div>
-                </li>
-                {% empty %}
-                <li class="list-group-item">No mails</li>
-                {% endfor %}
-            </ul>
-        </div>
     </div>
 
 </div>

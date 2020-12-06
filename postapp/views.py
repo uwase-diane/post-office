@@ -44,10 +44,10 @@ def sign_in(request):
         worker.save()
 
     if group == customer:
-        return redirect("/profile")
+        return redirect("/tracking")
 
     if group == worker:
-        return redirect("/parcels")
+        return redirect("/parcels-management")
 
     logout(request)
     return redirect("/login")
@@ -92,7 +92,6 @@ def add_user(request):
     dt = request.POST
     data = dt.dict()
     data.pop("csrfmiddlewaretoken")
-    print(data)
     gr = data.pop("group")
     group = Group.objects.filter(name=gr).first()
 
@@ -111,9 +110,6 @@ def add_user(request):
 
 @login_required(login_url='/login')
 def get_reports(request):
-    if not request.user.is_staff:
-        logout(request)
-        return redirect("/login")
     data = {
         "waiting": Parcel.objects.filter(status="Waiting"),
         "accepted": Parcel.objects.filter(status="Accepted"),
@@ -123,7 +119,18 @@ def get_reports(request):
         "on_way": Parcel.objects.filter(status="On way"),
         "delivered": Parcel.objects.filter(status="Delivered"),
     }
-    return render(request, "reports.html", data)
+
+    if request.user.is_staff:
+        return render(request, "reports.html", data)
+
+    group = request.user.groups.first()
+    worker = Group.objects.filter(name="Worker").first()
+
+    if group == worker:
+        return render(request, "worker-parcels.html", data)
+
+    logout(request)
+    return redirect("/login")
 
 
 @login_required(login_url='/login')
@@ -174,6 +181,52 @@ def add_mail_page(request):
 @login_required(login_url='/login')
 def index(request):
     return redirect("/tracking")
+
+
+@login_required(login_url='/login')
+def get_parcels(request):
+    if not request.user.is_staff:
+        logout(request)
+        return redirect("/login")
+
+    data = {
+        "user": request.user,
+        "parcels": Parcel.objects.filter(status="Waiting")
+    }
+
+    return render(request, "admin-parcels.html", data)
+
+
+@login_required(login_url='/login')
+def set_parcel_status(request, parcel_id):
+    statuses = ("approve", "reject", "checking", "on_way", "delivered")
+    status = request.GET.get("status")
+
+    parcel = Parcel.objects.filter(id=parcel_id).first()
+
+    if status in statuses and parcel:
+        if status == "approve":
+            parcel.status = "Waiting pickup"
+        elif status == "reject":
+            parcel.status = "Rejected"
+        elif status == "checking":
+            parcel.picked_up_by = request.user
+            parcel.status = "Checking"
+        elif status == "on_way":
+            parcel.status = "On way"
+        elif status == "delivered":
+            parcel.status = "Delivered"
+        parcel.save()
+    if request.user.is_staff:
+        return redirect("/new-parcels")
+
+    worker = Group.objects.filter(name="Worker").first()
+
+    if request.user.groups.first() == worker:
+        return redirect("/parcels-management")
+
+    logout(request)
+    return redirect("/login")
 
 
 @login_required(login_url='/login')
@@ -245,6 +298,7 @@ def add_parcel(request):
     img = request.FILES.get("image")
     data = dt.dict()
     data.pop("csrfmiddlewaretoken")
+    data["status"] = "Waiting"
 
     quantity = data.get("quantity")
 
@@ -270,7 +324,6 @@ def add_parcel(request):
     parc.sender = request.user
     parc.image = img
     parc.total_price = int(total)
-    print(data)
     parc.save()
     return redirect("/tracking")
 

@@ -22,4 +22,7 @@ urlpatterns = [
     path('parcel-payment/<slug:parcel_id>', views.parcel_payment),
     path('add-user', views.add_user),
     path('reports', views.get_reports),
+    path('new-parcels', views.get_parcels),
+    path('parcel-status/<slug:parcel_id>', views.set_parcel_status),
+    path('parcels-management', views.get_reports)
 ]
