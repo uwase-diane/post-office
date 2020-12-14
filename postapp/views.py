@@ -380,6 +380,7 @@ def add_parcel(request):
         data["status"] = "Waiting"
         Parcel.objects.filter(tracking_number=parcel.tracking_number).update(**data)
         parcel.image = img
+        parcel.status = "Waiting"
         parcel.save()
     else:
         parc = Parcel(**data)
