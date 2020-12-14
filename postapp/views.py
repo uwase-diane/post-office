@@ -180,7 +180,31 @@ def add_mail_page(request):
 
 @login_required(login_url='/login')
 def index(request):
-    return redirect("/tracking")
+    user = request.user
+    if user.is_staff:
+        return redirect("/users")
+
+    group = user.groups.first()
+
+    customer = Group.objects.filter(name="Customer").first()
+    worker = Group.objects.filter(name="Worker").first()
+
+    if not customer:
+        customer = Group(name="Customer")
+        customer.save()
+
+    if not worker:
+        worker = Group(name="Worker")
+        worker.save()
+
+    if group == customer:
+        return redirect("/tracking")
+
+    if group == worker:
+        return redirect("/parcels-management")
+
+    logout(request)
+    return redirect("/login")
 
 
 @login_required(login_url='/login')
