@@ -377,6 +377,7 @@ def add_parcel(request):
     if parcel:
         data["sender"] = request.user
         data["total_price"] = int(total)
+        data["status"] = "Waiting"
         Parcel.objects.filter(tracking_number=parcel.tracking_number).update(**data)
         parcel.image = img
         parcel.save()
