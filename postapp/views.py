@@ -187,6 +187,16 @@ def add_mail_page(request):
         "tracking_number": generate_code(),
         "addresses": Address.objects.filter(user=request.user).order_by("-is_default")
     }
+
+    prcl = request.GET.get("correct")
+
+    if prcl:
+        parcel = Parcel.objects.filter(id=prcl)
+
+        if parcel:
+            data["parcel"] = parcel
+            data["tracking_number"] = parcel.tracking_number
+
     return render(request, "send-mail.html", data)
 
 

@@ -36,31 +36,31 @@ Send a mail
                 <div class="form-group">
                     <label for="exampleInputText">Description</label>
                     <textarea placeholder="Description" class="form-control" name="description" id="description"
-                              cols="10" rows="5" required></textarea>
+                              cols="10" rows="5" required>{{parcel.description}}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputEmail1">Quantity in KG</label>
                     <input type="number" name="quantity" placeholder="Quantity" class="form-control"
-                           id="exampleInputText" aria-describedby="emailHelp" required>
+                           id="exampleInputText" aria-describedby="emailHelp" value="{{parcel.quantity}}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputEmail1">Height in mm</label>
                     <input type="number" name="dimension_height" placeholder="Height" class="form-control"
-                           id="exampleInputText" aria-describedby="emailHelp" required>
+                           id="exampleInputText" aria-describedby="emailHelp" value="{{parcel.dimension_height}}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputEmail1">Width in mm</label>
                     <input type="number" name="dimension_width" placeholder="Width" class="form-control"
-                           id="exampleInputText" aria-describedby="emailHelp" required>
+                           id="exampleInputText" aria-describedby="emailHelp" value="{{parcel.dimension_width}}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputEmail1">Length in mm</label>
                     <input type="number" name="dimension_length" placeholder="Length" class="form-control"
-                           id="exampleInputText" aria-describedby="emailHelp" required>
+                           id="exampleInputText" aria-describedby="emailHelp" value="{{parcel.dimension_length}}" required>
                 </div>
 
                 <div class="form-group">
@@ -97,7 +97,7 @@ Send a mail
                 <div class="form-group">
                     <label for="exampleInputEmail1">Receiver phone number</label>
                     <input type="tel" name="receiver" maxlength="15" minlength="13" placeholder="+25078xxxxxxxx"
-                           class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                           class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{parcel.receiver.username}}" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary col-12">Send now</button>
