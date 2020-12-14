@@ -7,6 +7,10 @@ from .utils import generate_code
 
 
 def login_view(request):
+    grps = Group.objects.count()
+    if grps == 0:
+        Group.objects.create(name="Customer")
+        Group.objects.create(name="Worker")
     return render(request, "login.html")
 
 
@@ -26,6 +30,12 @@ def sign_in(request):
     if not user:
         return redirect("/login")
     login(request, user)
+
+    grps = Group.objects.count()
+
+    if grps == 0:
+        Group.objects.create(name="Customer")
+        Group.objects.create(name="Worker")
 
     if user.is_staff:
         return redirect("/users")
@@ -180,6 +190,10 @@ def add_mail_page(request):
 
 @login_required(login_url='/login')
 def index(request):
+    grps = Group.objects.count()
+    if grps == 0:
+        Group.objects.create(name="Customer")
+        Group.objects.create(name="Worker")
     user = request.user
     if user.is_staff:
         return redirect("/users")
