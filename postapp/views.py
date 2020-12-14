@@ -191,7 +191,7 @@ def add_mail_page(request):
     prcl = request.GET.get("correct")
 
     if prcl:
-        parcel = Parcel.objects.filter(id=prcl)
+        parcel = Parcel.objects.filter(id=prcl).first()
 
         if parcel:
             data["parcel"] = parcel
