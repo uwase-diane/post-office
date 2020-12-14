@@ -82,12 +82,14 @@ def sign_up(request):
     usr.set_password(password)
     usr.save()
 
-    customer_group = Group.objects.filter(name="Customer").first()
+    grps = Group.objects.count()
 
-    if not customer_group:
-        customer_group = Group(name="Customer")
-        customer_group.save()
-        usr.groups.add(customer_group)
+    if grps == 0:
+        Group.objects.create(name="Customer")
+        Group.objects.create(name="Worker")
+
+    customer_group = Group.objects.filter(name="Customer").first()
+    usr.groups.add(customer_group)
 
     user = authenticate(request, username=username, password=password)
 
