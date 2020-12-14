@@ -374,10 +374,10 @@ def add_parcel(request):
 
     if parcel:
         data["sender"] = request.user
-        data["image"] = img
         data["total_price"] = int(total)
-
         Parcel.objects.filter(tracking_number=parcel.tracking_number).update(**data)
+        parcel.image = img
+        parcel.save()
     else:
         parc = Parcel(**data)
         parc.sender = request.user
