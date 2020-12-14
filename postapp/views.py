@@ -370,11 +370,20 @@ def add_parcel(request):
     data["receiver_address"] = rad
     data["quantity"] = float(data["quantity"])
 
-    parc = Parcel(**data)
-    parc.sender = request.user
-    parc.image = img
-    parc.total_price = int(total)
-    parc.save()
+    parcel = Parcel.objects.filter(tracking_number=data["tracking_number"]).first()
+
+    if parcel:
+        data["sender"] = request.user
+        data["image"] = img
+        data["total_price"] = int(total)
+
+        Parcel.objects.filter(tracking_number=parcel.tracking_number).update(**data)
+    else:
+        parc = Parcel(**data)
+        parc.sender = request.user
+        parc.image = img
+        parc.total_price = int(total)
+        parc.save()
     return redirect("/tracking")
 
 
