@@ -433,7 +433,7 @@ def csv_users(request):
     grp = request.GET.get('group')
     group = Group.objects.filter(name=grp).first()
 
-    users = User.objects.filter(group=group)
+    users = User.objects.filter(groups=group)
 
     content = [{'ID': user.pk,
                 'First name': user.first_name,
@@ -453,7 +453,7 @@ class ParcelsCSVRenderer(CSVRenderer):
 
 
 @api_view(['GET'])
-@renderer_classes((UsersCSVRenderer,))
+@renderer_classes((ParcelsCSVRenderer,))
 @permission_classes([IsAuthenticated])
 def csv_parcels(request):
     status = request.GET.get('status')
