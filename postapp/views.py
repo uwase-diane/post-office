@@ -9,6 +9,7 @@ from .models import Office, Address, User, Parcel
 from django.contrib.auth import authenticate, login, logout
 from .utils import generate_code
 from rest_framework_csv.renderers import CSVRenderer
+from datetime import datetime
 
 
 def login_view(request):
@@ -273,6 +274,7 @@ def set_parcel_status(request, parcel_id):
             parcel.status = "On way"
         elif status == "delivered":
             parcel.status = "Delivered"
+            parcel.delivered_at = datetime.now()
         parcel.save()
     if request.user.is_staff:
         return redirect("/new-parcels")
@@ -360,6 +362,9 @@ def add_parcel(request):
     quantity = data.get("quantity")
 
     total = int(quantity) * 5000
+
+    if data["delivery_option"] == "Express":
+        total = int(quantity) * 10000
 
     try:
         data.pop("image")
