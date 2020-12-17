@@ -1,9 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
+from rest_framework.decorators import api_view, renderer_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
 from .models import Office, Address, User, Parcel
 from django.contrib.auth import authenticate, login, logout
 from .utils import generate_code
+from rest_framework_csv.renderers import CSVRenderer
 
 
 def login_view(request):
@@ -413,3 +418,59 @@ def parcel_payment(request, parcel_id):
     parcel.status = "Waiting pickup"
     parcel.save()
     return redirect("/parcels/{}".format(parcel_id))
+
+
+# REPORTS DOWNLOADS
+
+class UsersCSVRenderer(CSVRenderer):
+    header = ['ID', 'First name', 'Last name', 'Phone number', 'Email']
+
+
+@api_view(['GET'])
+@renderer_classes((UsersCSVRenderer,))
+@permission_classes([IsAuthenticated])
+def csv_users(request):
+    grp = request.GET.get('group')
+    group = Group.objects.filter(name=grp).first()
+
+    users = User.objects.filter(group=group)
+
+    content = [{'ID': user.pk,
+                'First name': user.first_name,
+                'Last name': user.last_name,
+                'Phone number': user.username,
+                'Email': user.email}
+               for user in users]
+    response = Response(content)
+
+    filename = "{}s.csv".format(group.name)
+    response['Content-Disposition'] = "attachment; filename=%s" % filename
+    return response
+
+
+class ParcelsCSVRenderer(CSVRenderer):
+    header = ['Tracking number', 'Sender', 'Receiver', 'Receiver address', 'Status', 'Payment status', 'Total']
+
+
+@api_view(['GET'])
+@renderer_classes((UsersCSVRenderer,))
+@permission_classes([IsAuthenticated])
+def csv_parcels(request):
+    status = request.GET.get('status')
+    parcels = Parcel.objects.filter(status=status)
+
+    content = [{'Tracking number': parcel.tracking_number,
+                'Sender': parcel.sender.get_full_name(),
+                'Receiver': parcel.receiver.get_full_name(),
+                'Receiver address': parcel.receiver_address.name if parcel.receiver_address else "Pickup at the office",
+                'Status': parcel.status,
+                'Payment status': "Paid" if parcel.is_paid else "Not paid",
+                'Total': parcel.total_price}
+               for parcel in parcels]
+    response = Response(content)
+
+    fn = "{status} parcels.csv".format(status=status)
+
+    filename = fn.replace(" ", "-")
+    response['Content-Disposition'] = "attachment; filename=%s" % filename
+    return response

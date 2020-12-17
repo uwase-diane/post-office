@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 Django = "==3.1"
 Pillow = "==8.0.0"
+djangorestframework = "==3.11.0"
+djangorestframework-csv = "==2.1.0"
+unicodecsv = "==0.14.1"
 
 [dev-packages]
 

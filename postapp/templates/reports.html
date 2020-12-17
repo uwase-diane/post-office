@@ -41,6 +41,12 @@ Reports
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
             <br>
+            <a href="/export-parcels?status=Waiting">
+                <button class="btn btn-primary">
+                    Export report
+                </button>
+            </a>
+            <br>
             <ul class="list-group">
                 {% for p in waiting %}
                 <li class="list-group-item">
@@ -85,6 +91,12 @@ Reports
         </div>
 
         <div class="tab-pane fade" id="accepted" role="tabpanel" aria-labelledby="accepted-tab">
+            <br>
+            <a href="/export-parcels?status=Accepted">
+                <button class="btn btn-primary">
+                    Export report
+                </button>
+            </a>
             <br>
             <ul class="list-group">
                 {% for p in accepted %}
@@ -131,6 +143,12 @@ Reports
 
         <div class="tab-pane fade" id="waiting" role="tabpanel" aria-labelledby="waiting-tab">
             <br>
+            <a href="/export-parcels?status=Waiting%20pickup">
+                <button class="btn btn-primary">
+                    Export report
+                </button>
+            </a>
+            <br>
             <ul class="list-group">
                 {% for p in waiting_pickup %}
                 <li class="list-group-item">
@@ -175,6 +193,12 @@ Reports
         </div>
 
         <div class="tab-pane fade" id="checking" role="tabpanel" aria-labelledby="checking-tab">
+            <br>
+            <a href="/export-parcels?status=Checking">
+                <button class="btn btn-primary">
+                    Export report
+                </button>
+            </a>
             <br>
             <ul class="list-group">
                 {% for p in checking %}
@@ -222,6 +246,12 @@ Reports
 
         <div class="tab-pane fade" id="way" role="tabpanel" aria-labelledby="way-tab">
             <br>
+            <a href="/export-parcels?status=On%20way">
+                <button class="btn btn-primary">
+                    Export report
+                </button>
+            </a>
+            <br>
             <ul class="list-group">
                 {% for p in on_way %}
                 <li class="list-group-item">
@@ -268,6 +298,12 @@ Reports
 
         <div class="tab-pane fade" id="delivered" role="tabpanel" aria-labelledby="delivered-tab">
             <br>
+            <a href="/export-parcels?status=Delivered">
+                <button class="btn btn-primary">
+                    Export report
+                </button>
+            </a>
+            <br>
             <ul class="list-group">
                 {% for p in delivered %}
                 <li class="list-group-item">
@@ -313,6 +349,12 @@ Reports
         </div>
 
         <div class="tab-pane fade" id="rejected" role="tabpanel" aria-labelledby="rejected-tab">
+            <br>
+            <a href="/export-parcels?status=Rejected">
+                <button class="btn btn-primary">
+                    Export report
+                </button>
+            </a>
             <br>
             <ul class="list-group">
                 {% for p in rejected %}
