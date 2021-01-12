@@ -8,7 +8,7 @@ AFRICA'S TALKING SETUP
 """
 
 username = 'Kizaagri'
-api_key = 'f798724424c4bbb1eb38f3a954546d2dc37e6b28cde86e2071510335c3883838'
+api_key = 'c6456d5c3c95593e818d0fc10bc5082feeb9020bb704a888fa04007223322602'
 
 africastalking.initialize(username, api_key)
 sms_backend = africastalking.SMS
