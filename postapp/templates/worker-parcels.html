@@ -52,9 +52,26 @@ Mails Management
                             <br>
                             <b>Address: </b>{{p.sender_address.name}}
                             <br>
+                            {% if p.sender_address %}
+                            {{p.sender_address.country}} | {{p.sender_address.province}} |
+                            {{p.sender_address.district}} | {{p.sender_address.street}} |
+                            {{p.sender_address.house_number}}
+                            {% else %}
+                            Delivered to the office
+                            {% endif %}
+                            <br>
                             <b>Receiver: </b>{{p.receiver.first_name}} {{p.receiver.last_name}}
                             <br>
                             <b>Address: </b>{{p.receiver_address.name}}
+                            <br>
+                            {% if p.receiver_address %}
+                            {{p.receiver_address.country}} | {{p.receiver_address.province}} |
+                            {{p.receiver_address.district}} | {{p.receiver_address.street}} |
+                            {{p.receiver_address.house_number}}
+                            {% else %}
+                            Pickup from the post office
+                            {% endif %}
+                            {% else %}
                             <br>
                             <b>Delivery option: </b>{{p.delivery_option}}
                             <br>
@@ -103,9 +120,26 @@ Mails Management
                             <br>
                             <b>Address: </b>{{p.sender_address.name}}
                             <br>
+                            {% if p.sender_address %}
+                            {{p.sender_address.country}} | {{p.sender_address.province}} |
+                            {{p.sender_address.district}} | {{p.sender_address.street}} |
+                            {{p.sender_address.house_number}}
+                            {% else %}
+                            Delivered to the office
+                            {% endif %}
+                            <br>
                             <b>Receiver: </b>{{p.receiver.first_name}} {{p.receiver.last_name}}
                             <br>
                             <b>Address: </b>{{p.receiver_address.name}}
+                            <br>
+                            {% if p.receiver_address %}
+                            {{p.receiver_address.country}} | {{p.receiver_address.province}} |
+                            {{p.receiver_address.district}} | {{p.receiver_address.street}} |
+                            {{p.receiver_address.house_number}}
+                            {% else %}
+                            Pickup from the post office
+                            {% endif %}
+                            {% else %}
                             <br>
                             <b>Delivery option: </b>{{p.delivery_option}}
                             <br>
@@ -157,9 +191,26 @@ Mails Management
                             <br>
                             <b>Address: </b>{{p.sender_address.name}}
                             <br>
+                            {% if p.sender_address %}
+                            {{p.sender_address.country}} | {{p.sender_address.province}} |
+                            {{p.sender_address.district}} | {{p.sender_address.street}} |
+                            {{p.sender_address.house_number}}
+                            {% else %}
+                            Delivered to the office
+                            {% endif %}
+                            <br>
                             <b>Receiver: </b>{{p.receiver.first_name}} {{p.receiver.last_name}}
                             <br>
                             <b>Address: </b>{{p.receiver_address.name}}
+                            <br>
+                            {% if p.receiver_address %}
+                            {{p.receiver_address.country}} | {{p.receiver_address.province}} |
+                            {{p.receiver_address.district}} | {{p.receiver_address.street}} |
+                            {{p.receiver_address.house_number}}
+                            {% else %}
+                            Pickup from the post office
+                            {% endif %}
+                            {% else %}
                             <br>
                             <b>Delivery option: </b>{{p.delivery_option}}
                             <br>
@@ -207,9 +258,26 @@ Mails Management
                             <br>
                             <b>Address: </b>{{p.sender_address.name}}
                             <br>
+                            {% if p.sender_address %}
+                            {{p.sender_address.country}} | {{p.sender_address.province}} |
+                            {{p.sender_address.district}} | {{p.sender_address.street}} |
+                            {{p.sender_address.house_number}}
+                            {% else %}
+                            Delivered to the office
+                            {% endif %}
+                            <br>
                             <b>Receiver: </b>{{p.receiver.first_name}} {{p.receiver.last_name}}
                             <br>
                             <b>Address: </b>{{p.receiver_address.name}}
+                            <br>
+                            {% if p.receiver_address %}
+                            {{p.receiver_address.country}} | {{p.receiver_address.province}} |
+                            {{p.receiver_address.district}} | {{p.receiver_address.street}} |
+                            {{p.receiver_address.house_number}}
+                            {% else %}
+                            Pickup from the post office
+                            {% endif %}
+                            {% else %}
                             <br>
                             <b>Delivery option: </b>{{p.delivery_option}}
                             <br>
