@@ -396,6 +396,8 @@ def add_parcel(request):
     parcel = Parcel.objects.filter(tracking_number=data["tracking_number"]).first()
 
     if parcel:
+        data["id"] = parcel.id
+        parcel = Parcel(**data)
         data["sender"] = request.user
         data["total_price"] = int(total)
         data["status"] = "Waiting"
