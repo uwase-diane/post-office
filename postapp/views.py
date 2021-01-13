@@ -403,8 +403,11 @@ def add_parcel(request):
         if total_diff < 0:
             data["total_price"] = int(total_diff) * -1
             data["is_paid"] = False
+            data["status"] = "Waiting"
         else:
             data["total_price"] = int(total)
+            data["is_paid"] = True
+            data["status"] = "Waiting pickup"
 
         data["id"] = parcel.id
         data["created_at"] = parcel.created_at
@@ -412,7 +415,6 @@ def add_parcel(request):
         data["receiver"] = parcel.receiver
         data["sender_address"] = parcel.sender_address
         data["receiver_address"] = parcel.receiver_address
-        data["status"] = "Waiting"
         parcel = Parcel(**data)
 
         Parcel.objects.filter(tracking_number=parcel.tracking_number).update(**data)
