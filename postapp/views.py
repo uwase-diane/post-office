@@ -398,6 +398,12 @@ def add_parcel(request):
     parcel = Parcel.objects.filter(tracking_number=data["tracking_number"]).first()
 
     if parcel:
+        total_diff = parcel.total_price - int(total)
+
+        if total_diff < 0:
+            data["total_price"] = int(total_diff) * -1
+            data["is_paid"] = False
+
         data["id"] = parcel.id
         data["created_at"] = parcel.created_at
         data["sender"] = request.user
