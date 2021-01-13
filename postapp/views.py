@@ -398,22 +398,21 @@ def add_parcel(request):
     parcel = Parcel.objects.filter(tracking_number=data["tracking_number"]).first()
 
     if parcel:
-        total_diff = parcel.total_price - int(total)
-
-        if total_diff < 0:
-            data["total_price"] = int(total_diff) * -1
-            data["is_paid"] = False
-        else:
-            data["total_price"] = int(total)
-
         data["id"] = parcel.id
         data["created_at"] = parcel.created_at
         data["sender"] = request.user
         data["receiver"] = parcel.receiver
         data["sender_address"] = parcel.sender_address
         data["receiver_address"] = parcel.receiver_address
+        data["total_price"] = int(total)
         data["status"] = "Waiting"
         parcel = Parcel(**data)
+
+        total_diff = parcel.total_price - int(total)
+
+        if total_diff < 0:
+            data["total_price"] = int(total_diff) * -1
+            parcel.is_paid = False
 
         Parcel.objects.filter(tracking_number=parcel.tracking_number).update(**data)
         parcel.image = img
@@ -424,6 +423,7 @@ def add_parcel(request):
         parc.sender = request.user
         parc.image = img
         parc.total_price = int(total)
+        parc.status = "Waiting pickup"
         parc.save()
     return redirect("/tracking")
 
