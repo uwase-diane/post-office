@@ -13,6 +13,7 @@ from datetime import datetime
 
 from .sms_utils import send_sms
 
+
 def login_view(request):
     grps = Group.objects.count()
     if grps == 0:
@@ -278,7 +279,8 @@ def set_parcel_status(request, parcel_id):
             parcel.delivered_at = datetime.now()
         parcel.save()
 
-        message = "Your parcel with tracking number {tracking} info has been updated, the status is now {status}".format(tracking=parcel.tracking_number, status=parcel.status)
+        message = "Your parcel with tracking number {tracking} info has been updated, the status is now {status}".format(
+            tracking=parcel.tracking_number, status=parcel.status)
         phone_numbers = [parcel.sender.username, parcel.receiver.username]
 
         send_sms(phone_numbers=phone_numbers, message=message)
@@ -397,10 +399,14 @@ def add_parcel(request):
 
     if parcel:
         data["id"] = parcel.id
-        parcel = Parcel(**data)
+        data["created_at"] = parcel.created_at
         data["sender"] = request.user
+        data["receiver"] = parcel.receiver
+        data["sender_address"] = parcel.sender_address
+        data["receiver_address"] = parcel.receiver_address
         data["total_price"] = int(total)
         data["status"] = "Waiting"
+        parcel = Parcel(**data)
 
         total_diff = parcel.total_price - int(total)
 
