@@ -404,6 +404,7 @@ def add_parcel(request):
 
         if total_diff < 0:
             data["total_price"] = int(total_diff) * -1
+            parcel.is_paid = False
 
         Parcel.objects.filter(tracking_number=parcel.tracking_number).update(**data)
         parcel.image = img
